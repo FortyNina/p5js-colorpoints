@@ -31,7 +31,7 @@ function draw() {
   lerpPercent += colorTravelSpeed;
   if (lerpPercent > 1) {
     lerpPercent = 0;
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 4; i++) {
       colorIndicies[i] += 1;
       if (colorIndicies[i] > 3) {
         colorIndicies[i] = 0;
