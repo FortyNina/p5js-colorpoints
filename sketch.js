@@ -68,10 +68,10 @@ function draw() {
         newWidth = 3;
       } else if (brightMapped < 7) {
         fill(currentColThree);
-        newWidth = 4;
+        newWidth = 5;
       } else {
         fill(currentColFour);
-        newWidth = 5;
+        newWidth = 6;
       }
       rectMode(CENTER);
 
