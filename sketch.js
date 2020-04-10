@@ -71,7 +71,7 @@ function draw() {
         newWidth = 5;
       } else {
         fill(currentColFour);
-        newWidth = 6;
+        newWidth = 5.5;
       }
       rectMode(CENTER);
 
