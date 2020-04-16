@@ -43,18 +43,7 @@ var accentFourColorPicker;
 function setup() {
   createCanvas(screenWidth, screenHeight);
   pixelDensity(1);
-  var constraints = {
-    audio: false,
-    video: {
-      facingMode: {
-        exact: "environment"
-      }
-    }
-    //video: {
-      //facingMode: "user"
-    //}
-  };
-  videoFeed = createCapture(constraints);
+  videoFeed = createCapture(VIDEO);
   videoFeed.size(width / 8, height / 8);
   //videoFeed.hide();
   threshSlider = createSlider(0, 10000, 5000);
