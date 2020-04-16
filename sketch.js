@@ -45,10 +45,10 @@ function setup() {
   pixelDensity(1);
   videoFeed = createCapture(VIDEO);
   videoFeed.size(width / 8, height / 8);
-  videoFeed.hide();
+  //videoFeed.hide();
   threshSlider = createSlider(0, 10000, 5000);
   invertCheckBox = createCheckbox('Invert',false);
-  
+
     backgroundColorPicker = createInput(RGBToHex(backCol[0],backCol[1],backCol[2]), 'color');
   accentOneColorPicker = createInput(RGBToHex(accentColOne[0],accentColOne[1],accentColOne[2]), 'color');
     accentTwoColorPicker = createInput(RGBToHex(accentColTwo[0],accentColTwo[1],accentColTwo[2]), 'color');
@@ -69,7 +69,7 @@ function draw() {
   hexToRGB(backgroundColorPicker.value(), backCol);
 
 
-  
+
   //calculate lerpPercent
   lerpPercent += colorTravelSpeed;
   if (lerpPercent > 1) {
