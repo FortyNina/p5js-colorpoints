@@ -45,6 +45,7 @@ function setup() {
   pixelDensity(1);
   videoFeed = createCapture(VIDEO);
   videoFeed.size(width / 8, height / 8);
+  //git status
   //videoFeed.hide();
   threshSlider = createSlider(0, 10000, 5000);
   invertCheckBox = createCheckbox('Invert',false);
