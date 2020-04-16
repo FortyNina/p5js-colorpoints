@@ -4,7 +4,8 @@ var colorTravelSpeed = .05; //how quickly the color lerps
 var prevFrame;
 var movementThreshold = 4000;
 var maxDotWidth = 15;
-var invert = true;
+var invert = false;
+var pixScale = 16;
 
 var screenWidth = 600;
 var screenHeight = 450;
@@ -41,14 +42,21 @@ var accentFourColorPicker;
 //-----------------------------------------------------------
 
 function setup() {
-  createCanvas(screenWidth, screenHeight);
+  cv = createCanvas(displayWidth, displayHeight);
+  cv.parent('container');
+
   pixelDensity(1);
   videoFeed = createCapture(VIDEO);
-  videoFeed.size(width / 8, height / 8);
-  //videoFeed.hide();
-  threshSlider = createSlider(0, 10000, 5000);
-  invertCheckBox = createCheckbox('Invert',false);
+  videoFeed.size(displayWidth / pixScale, displayHeight / pixScale);
 
+
+
+  videoFeed.hide();
+  threshSlider = createSlider(0, 10000, 5000);
+  threshSlider.position = (200, 500);
+  createP("");
+  invertCheckBox = createCheckbox('Invert',false);
+createP("");
     backgroundColorPicker = createInput(RGBToHex(backCol[0],backCol[1],backCol[2]), 'color');
   accentOneColorPicker = createInput(RGBToHex(accentColOne[0],accentColOne[1],accentColOne[2]), 'color');
     accentTwoColorPicker = createInput(RGBToHex(accentColTwo[0],accentColTwo[1],accentColTwo[2]), 'color');
@@ -98,7 +106,7 @@ function draw() {
       var r = videoFeed.pixels[index + 0];
       var g = videoFeed.pixels[index + 1];
       var b = videoFeed.pixels[index + 2];
-      var brightMapped = (map(((r + g + b) / 3), 0, 255, 0, 8)) + .5;
+      var brightMapped = (map(((r + g + b) / 3), 0, 255, 0, pixScale)) + .5;
       var widthBasedOnMovement = 1;
       //get new width based on pixel comparisons
       //widthBasedOnMovement = whatever
@@ -146,7 +154,7 @@ function draw() {
         finalWidth = maxDotWidth;
       }
 
-      ellipse(x * 8, y * 8, finalWidth, finalWidth);
+      ellipse(x * pixScale, y * pixScale, finalWidth, finalWidth);
     }
   }
   prevFrame = videoFeed.pixels;
