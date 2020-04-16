@@ -43,9 +43,19 @@ var accentFourColorPicker;
 function setup() {
   createCanvas(screenWidth, screenHeight);
   pixelDensity(1);
-  videoFeed = createCapture(VIDEO);
+  var constraints = {
+    audio: false,
+    video: {
+      facingMode: {
+        exact: "environment"
+      }
+    }
+    //video: {
+      //facingMode: "user"
+    //}
+  };
+  videoFeed = createCapture(constraints);
   videoFeed.size(width / 8, height / 8);
-  //git status
   //videoFeed.hide();
   threshSlider = createSlider(0, 10000, 5000);
   invertCheckBox = createCheckbox('Invert',false);
@@ -119,10 +129,6 @@ function draw() {
             widthBasedOnMovement = 1;
           }
         }
-
-
-
-        // print(moveDist);
       }
       //
       var widthBrightnessModifier = 1;
