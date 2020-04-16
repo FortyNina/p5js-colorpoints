@@ -10,7 +10,7 @@ var screenWidth = 600;
 var screenHeight = 450;
 
 //COLOR VARIABLES------------------------------------
-let backCol = [123, 36, 63, 255]; //background color
+let backCol = [255, 255, 255, 255]; //background color
 let accentColOne = [243, 45, 68, 255];
 let accentColTwo = [255, 194, 25, 255];
 let accentColThree = [85, 155, 255, 255];
