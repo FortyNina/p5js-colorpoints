@@ -6,7 +6,7 @@ var prevFrame;
 var movementThreshold = 4000;
 var maxDotWidth = 15;
 var invert = false;
-var pixScale = 14;
+var pixScale = 16;
 
 var screenWidth = 600;
 var screenHeight = 450;
@@ -15,6 +15,8 @@ var desiredWidthRes = 600;
 var desiredHeightRes = 450;
 
 var dotSize = 1.5;
+
+var fontType;
 
 //COLOR VARIABLES------------------------------------
 let backCol = [123, 36, 63, 255]; //background color
@@ -47,6 +49,7 @@ var accentFourColorPicker;
 
 //-----------------------------------------------------------
 
+
 function setup() {
   console.log(windowWidth);
   console.log(displayWidth);
@@ -69,38 +72,18 @@ function setup() {
 
 
   videoFeed.hide();
-  threshSlider = createSlider(0, 10000, 5000);
-  threshSlider.style('width', '100%');
-  threshSlider.style('height', '25px');
-  threshSlider.style("background", "#7B243F");
-  threshSlider.style('outline', 'none');
-  threshSlider.parent('gui');
-  createP("");
-  invertCheckBox = createCheckbox('Invert',false);
-  invertCheckBox.parent('gui');
-createP("");
-    backgroundColorPicker = createInput(RGBToHex(backCol[0],backCol[1],backCol[2]), 'color');
-    backgroundColorPicker.parent('gui');
-  accentOneColorPicker = createInput(RGBToHex(accentColOne[0],accentColOne[1],accentColOne[2]), 'color');
-  accentOneColorPicker.parent('gui');
-    accentTwoColorPicker = createInput(RGBToHex(accentColTwo[0],accentColTwo[1],accentColTwo[2]), 'color');
-    accentTwoColorPicker.parent('gui');
-    accentThreeColorPicker = createInput(RGBToHex(accentColThree[0],accentColThree[1],accentColThree[2]), 'color');
-    accentThreeColorPicker.parent('gui');
-    accentFourColorPicker = createInput(RGBToHex(accentColFour[0],accentColFour[1],accentColFour[2]), 'color');
-    accentFourColorPicker.parent('gui');
+  setGUIElements();
 
 }
 
 
 function draw() {
 
-  movementThreshold = threshSlider.value();
+  //movementThreshold = threshSlider.value();
 
 
-  //var movementThresh = select('#movementThresh').value();
-    //movementThreshold = map(movementThresh, 0, 100, 1, 10);
-  console.log(movementThreshold)
+  var movementThresh = select('#movementThresh').value();
+  movementThreshold = map(movementThresh, 0, 100, 1, 10);
 
 
   invert = invertCheckBox.checked();
@@ -200,6 +183,8 @@ catch(error) {
     }
   }
   prevFrame = videoFeed.pixels;
+  textSize(width / 3);
+  text("COLOR", 0,0);
 
 }
 
@@ -255,8 +240,61 @@ function windowResized() {
 
    videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
    videoFeed.hide();
+}
+
+function setGUIElements(){
+
+    var title = createElement('h1', "Color Play - Points");
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('gui');
 
 
+    title = createElement('h2', "Invert Points");
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('gui');
+
+    invertCheckBox = createCheckbox('',false);
+    invertCheckBox.parent('gui');
+
+    title = createElement('h2', "Threshold");
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('gui');
+
+
+    title = createElement('h2', "Palette Select");
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('palette');
+
+    backgroundColorPicker = createInput(RGBToHex(backCol[0],backCol[1],backCol[2]), 'color');
+    backgroundColorPicker.style("width","19.9%");
+    backgroundColorPicker.style("height","30px");
+    backgroundColorPicker.parent('palette');
+
+    accentOneColorPicker = createInput(RGBToHex(accentColOne[0],accentColOne[1],accentColOne[2]), 'color');
+    accentOneColorPicker.style("width","19.9%");
+    accentOneColorPicker.style("height","30px");
+    accentOneColorPicker.parent('palette');
+
+    accentTwoColorPicker = createInput(RGBToHex(accentColTwo[0],accentColTwo[1],accentColTwo[2]), 'color');
+    accentTwoColorPicker.style("width","19.9%");
+    accentTwoColorPicker.style("height","30px");
+    accentTwoColorPicker.parent('palette');
+
+
+    accentThreeColorPicker = createInput(RGBToHex(accentColThree[0],accentColThree[1],accentColThree[2]), 'color');
+    accentThreeColorPicker.style("width","19.9%");
+    accentThreeColorPicker.style("height","30px");
+    accentThreeColorPicker.parent('palette');
+
+
+    accentFourColorPicker = createInput(RGBToHex(accentColFour[0],accentColFour[1],accentColFour[2]), 'color');
+    accentFourColorPicker.style("width","19.9%");
+    accentFourColorPicker.style("height","30px");
+    accentFourColorPicker.parent('palette');
 
 
 

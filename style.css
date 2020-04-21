@@ -2,9 +2,53 @@
     font-family: sans-serif;
 }
 
+@font-face{
+  src: url(font/GT-America-Compressed-Regular.otf);
+  font-family: america;
+}
+
 body {
   background-color: #7B243F;
 }
+
+h1{
+  font-size: 400%;
+  font-family: america;
+  padding-left: 20px;
+}
+
+h2{
+  font-size: 150%;
+  font-family: america;
+  padding-left: 20px;
+  padding-bottom: 0px;
+}
+
+.checked {
+content: "\2713";
+text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+font-size: 40px;
+color: #000;
+text-align: center;
+line-height: 15px;
+display: none;
+border-radius: 3px;
+
+}
+
+.checkbox label:before {
+}
+
+input[type=checkbox] {
+  text-shadow:  1px 1px 1px rgba(0, 0, 0, .2);
+  font-size: 80px;
+}
+
+
+
+
+
+
 
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
@@ -24,13 +68,14 @@ body {
   appearance: none;
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  background: #fff;
+  opacity: 1;
   cursor: pointer; /* Cursor on hover */
 }
 
 .slider::-moz-range-thumb {
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  background: #fff; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
