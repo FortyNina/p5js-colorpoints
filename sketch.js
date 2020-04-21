@@ -1,14 +1,20 @@
 var videoFeed; //reference to video from webcam
+var cv;
 var lerpPercent = 0; //keep track of lerping
 var colorTravelSpeed = .05; //how quickly the color lerps
 var prevFrame;
 var movementThreshold = 4000;
 var maxDotWidth = 15;
 var invert = false;
-var pixScale = 16;
+var pixScale = 14;
 
 var screenWidth = 600;
 var screenHeight = 450;
+
+var desiredWidthRes = 600;
+var desiredHeightRes = 450;
+
+var dotSize = 1.5;
 
 //COLOR VARIABLES------------------------------------
 let backCol = [123, 36, 63, 255]; //background color
@@ -42,12 +48,23 @@ var accentFourColorPicker;
 //-----------------------------------------------------------
 
 function setup() {
-  cv = createCanvas(displayWidth, displayHeight);
-  cv.parent('container');
+  console.log(windowWidth);
+  console.log(displayWidth);
+   screenHeight = windowHeight;
+   screenWidth = windowWidth;
+
+   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
+
+
 
   pixelDensity(1);
   videoFeed = createCapture(VIDEO);
-  videoFeed.size(displayWidth / pixScale, displayHeight / pixScale);
+
+    cv = createCanvas(screenWidth, screenHeight);
+    cv.parent('container');
+
+
+  videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
 
 
 
@@ -98,7 +115,14 @@ function draw() {
 
 
   background(backCol);
+  try {
   videoFeed.loadPixels();
+}
+catch(error) {
+  console.error("Resizing window");
+
+}
+
   //Handle coloring pixels
   for (var y = 0; y < videoFeed.height; y++) {
     for (var x = 0; x < videoFeed.width; x++) {
@@ -153,6 +177,7 @@ function draw() {
       if (finalWidth > maxDotWidth) {
         finalWidth = maxDotWidth;
       }
+      finalWidth = finalWidth * dotSize;
 
       ellipse(x * pixScale, y * pixScale, finalWidth, finalWidth);
     }
@@ -193,4 +218,30 @@ function RGBToHex(r,g,b){
   var hx = "#" + hex(r,2) + hex(g,2) + hex(b,2);
   print(hx);
   return hx;
+}
+
+function windowResized() {
+
+   screenHeight = windowHeight;
+   screenWidth = windowWidth;
+
+   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
+
+
+
+   pixelDensity(1);
+   //videoFeed = createCapture(VIDEO);
+
+   resizeCanvas(screenWidth, screenHeight);
+    cv.parent('container');
+
+
+   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
+   videoFeed.hide();
+
+
+
+
+
+
 }
