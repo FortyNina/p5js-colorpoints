@@ -61,7 +61,7 @@ function setup() {
   videoFeed = createCapture(VIDEO);
 
     cv = createCanvas(screenWidth, screenHeight);
-    cv.parent('container');
+    cv.parent('video');
 
 
   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
@@ -70,15 +70,25 @@ function setup() {
 
   videoFeed.hide();
   threshSlider = createSlider(0, 10000, 5000);
-  threshSlider.position = (200, 500);
+  threshSlider.style('width', '100%');
+  threshSlider.style('height', '25px');
+  threshSlider.style("background", "#7B243F");
+  threshSlider.style('outline', 'none');
+  threshSlider.parent('gui');
   createP("");
   invertCheckBox = createCheckbox('Invert',false);
+  invertCheckBox.parent('gui');
 createP("");
     backgroundColorPicker = createInput(RGBToHex(backCol[0],backCol[1],backCol[2]), 'color');
+    backgroundColorPicker.parent('gui');
   accentOneColorPicker = createInput(RGBToHex(accentColOne[0],accentColOne[1],accentColOne[2]), 'color');
+  accentOneColorPicker.parent('gui');
     accentTwoColorPicker = createInput(RGBToHex(accentColTwo[0],accentColTwo[1],accentColTwo[2]), 'color');
+    accentTwoColorPicker.parent('gui');
     accentThreeColorPicker = createInput(RGBToHex(accentColThree[0],accentColThree[1],accentColThree[2]), 'color');
+    accentThreeColorPicker.parent('gui');
     accentFourColorPicker = createInput(RGBToHex(accentColFour[0],accentColFour[1],accentColFour[2]), 'color');
+    accentFourColorPicker.parent('gui');
 
 }
 
@@ -86,6 +96,13 @@ createP("");
 function draw() {
 
   movementThreshold = threshSlider.value();
+
+
+  //var movementThresh = select('#movementThresh').value();
+    //movementThreshold = map(movementThresh, 0, 100, 1, 10);
+  console.log(movementThreshold)
+
+
   invert = invertCheckBox.checked();
   hexToRGB(accentOneColorPicker.value(), accentColOne);
   hexToRGB(accentTwoColorPicker.value(), accentColTwo);
@@ -233,7 +250,7 @@ function windowResized() {
    //videoFeed = createCapture(VIDEO);
 
    resizeCanvas(screenWidth, screenHeight);
-    cv.parent('container');
+    cv.parent('video');
 
 
    videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
