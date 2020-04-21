@@ -14,7 +14,7 @@ var screenHeight = 450;
 var desiredWidthRes = 600;
 var desiredHeightRes = 450;
 
-var dotSize = 1.5;
+var dotSize = 1.75;
 
 var fontType;
 
@@ -95,6 +95,7 @@ function draw() {
 
 
 
+
   //calculate lerpPercent
   lerpPercent += colorTravelSpeed;
   if (lerpPercent > 1) {
@@ -156,19 +157,19 @@ catch(error) {
       stroke(0, 0, 0, 0);
       if (brightMapped < 1) {
         fill(currentColOne);
-        widthBrightnessModifier = 1;
-      } else if (brightMapped < 3) {
-        fill(currentColOne);
-        widthBrightnessModifier = 4;
+        widthBrightnessModifier = .75;
       } else if (brightMapped < 5) {
+        fill(currentColOne);
+        widthBrightnessModifier = 3;
+      } else if (brightMapped < 7) {
         fill(currentColTwo);
         widthBrightnessModifier = 6;
-      } else if (brightMapped < 7) {
+      } else if (brightMapped < 11) {
         fill(currentColThree);
-        widthBrightnessModifier = 8;
+        widthBrightnessModifier = 9;
       } else {
         fill(currentColFour);
-        widthBrightnessModifier = 10;
+        widthBrightnessModifier = 11;
       }
 
       rectMode(CENTER);
@@ -224,44 +225,47 @@ function RGBToHex(r,g,b){
 
 function windowResized() {
 
-   screenHeight = windowHeight;
-   screenWidth = windowWidth;
+  //NOT WORKING YET
 
-   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
-
-
-
-   pixelDensity(1);
-   //videoFeed = createCapture(VIDEO);
-
-   resizeCanvas(screenWidth, screenHeight);
-    cv.parent('video');
-
-
-   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
-   videoFeed.hide();
+   // screenHeight = windowHeight;
+   // screenWidth = windowWidth;
+   //
+   // screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
+   //
+   //
+   //
+   // pixelDensity(1);
+   // //videoFeed = createCapture(VIDEO);
+   //
+   // resizeCanvas(screenWidth, screenHeight);
+   //  cv.parent('video');
+   //
+   //
+   // videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
+   // videoFeed.hide();
 }
 
 function setGUIElements(){
 
-    var title = createElement('h1', "Color Play - Points");
+    var title = createElement('h1', "Color Play - Pointilism");
     title.style('color','#fff');
     title.style('opacity', '.8');
-    title.parent('gui');
+    title.parent('title');
+
+    title = createElement('h2', "Threshold");
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('threshold');
 
 
     title = createElement('h2', "Invert Points");
     title.style('color','#fff');
     title.style('opacity', '.8');
-    title.parent('gui');
+    title.parent('invertBox');
 
     invertCheckBox = createCheckbox('',false);
-    invertCheckBox.parent('gui');
+    invertCheckBox.parent('invertBox');
 
-    title = createElement('h2', "Threshold");
-    title.style('color','#fff');
-    title.style('opacity', '.8');
-    title.parent('gui');
 
 
     title = createElement('h2', "Palette Select");
