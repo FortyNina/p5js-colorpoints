@@ -51,17 +51,21 @@ var accentFourColorPicker;
 
 
 function setup() {
-  console.log(windowWidth);
-  console.log(displayWidth);
+
    screenHeight = windowHeight;
    screenWidth = windowWidth;
+     videoFeed = createCapture(VIDEO);
+     var title = createElement('h2', "VideoFeed Dim" + videoFeed.width + " " + videoFeed.height);
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('threshold');
+
 
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
 
 
 
   pixelDensity(1);
-  videoFeed = createCapture(VIDEO);
 
     cv = createCanvas(screenWidth, screenHeight);
     cv.parent('video');
@@ -263,11 +267,7 @@ function setGUIElements(){
     title.style('opacity', '.8');
     title.parent('invertBox');
 
-     title = createElement('h2', "VideoFeed Dim" + videoFeed.width + " " + videoFeed.height);
-    title.style('color','#fff');
-    title.style('opacity', '.8');
-    title.parent('threshold');
-
+     
     invertCheckBox = createCheckbox('',false);
     invertCheckBox.parent('invertBox');
 
