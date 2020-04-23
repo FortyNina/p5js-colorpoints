@@ -52,42 +52,35 @@ var accentFourColorPicker;
 
 function setup() {
 
+   //Get proper resolutions based on mobile device and window widths
    screenHeight = windowHeight;
    screenWidth = windowWidth;
-   desiredWidthRes = displayWidth;
-   desiredHeightRes = displayHeight;
 
-
-   videoFeed = createCapture(VIDEO);
-  
+   if(isMobileDevice()){
+      desiredWidthRes = displayWidth;
+      desiredHeightRes = displayHeight;
+   } 
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
-   
 
 
-  pixelDensity(1);
-
+    //Create and set up Canvas
     cv = createCanvas(screenWidth, screenHeight);
-    cv.parent('video');
+    cv.parent('video'); 
 
 
+   //Set up Video feed
+   videoFeed = createCapture(VIDEO);
+   pixelDensity(1);
+   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
+   videoFeed.hide();
 
-  videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
-  var ismob = isMobileDevice();
-  var title = createElement('h2', ismob);
-    title.style('color','#fff');
-    title.style('opacity', '.8');
-    title.parent('title');
-
-
-  //videoFeed.hide();
-  setGUIElements();
+   //Create all GUI elements
+   setGUIElements();
 
 }
 
 
 function draw() {
-
-  //movementThreshold = threshSlider.value();
 
   var movementThresh = select('#movementThresh').value();
   movementThreshold = map(movementThresh, 0, 100, 1, 10);
@@ -99,8 +92,6 @@ function draw() {
   hexToRGB(accentThreeColorPicker.value(), accentColThree);
   hexToRGB(accentFourColorPicker.value(), accentColFour);
   hexToRGB(backgroundColorPicker.value(), backCol);
-
-
 
 
   //calculate lerpPercent
@@ -266,11 +257,6 @@ function setGUIElements(){
 
 
     title = createElement('h2', "Invert Points");
-    title.style('color','#fff');
-    title.style('opacity', '.8');
-    title.parent('invertBox');
-
-    title = createElement('h2', "Video feed" +  videoFeed.width + " " + videoFeed.height);
     title.style('color','#fff');
     title.style('opacity', '.8');
     title.parent('invertBox');
