@@ -55,7 +55,7 @@ function setup() {
    screenHeight = windowHeight;
    screenWidth = windowWidth;
      videoFeed = createCapture(VIDEO);
-     var title = createElement('h2', "VideoFeed Dim" + videoFeed.width + " " + videoFeed.height);
+     var title = createElement('h2', "Display Dim" + displayWidth + " " + displayHeight);
     title.style('color','#fff');
     title.style('opacity', '.8');
     title.parent('threshold');
