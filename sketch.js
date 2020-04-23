@@ -57,11 +57,11 @@ function setup() {
 
    if(isMobileDevice()){
       desiredWidthRes = displayWidth;
-      desiredHeightRes = displayHeight;
+      desiredHeightRes = displayHeight - 75;
 
       //Handle case if mobile device is sideways orientation
       if(windowWidth > windowHeight){
-        desiredWidthRes = displayHeight;
+        desiredWidthRes = displayHeight - 75;
         desiredHeightRes = displayWidth;
       }
    } 
@@ -237,11 +237,11 @@ function windowResized() {
 
    if(isMobileDevice()){
       desiredWidthRes = displayWidth;
-      desiredHeightRes = displayHeight;
+      desiredHeightRes = displayHeight - 75;
 
       //Handle case if mobile device is sideways orientation
       if(windowWidth > windowHeight || abs(windowHeight - windowWidth) < 100){
-        desiredWidthRes = displayHeight;
+        desiredWidthRes = displayHeight - 75;
         desiredHeightRes = displayWidth;
       }
    }     
@@ -260,6 +260,7 @@ function windowResized() {
    videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
    videoFeed.hide();
 }
+
 
 function setGUIElements(){
 
