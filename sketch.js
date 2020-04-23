@@ -250,7 +250,7 @@ function windowResized() {
       }
    } 
 
-   orientText = createElement('h2', "" + windowWidth + " x " + windowHeight);
+   orientText = createElement('h2', typeof window.orientation);
     
 
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
