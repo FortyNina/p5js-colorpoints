@@ -45,6 +45,9 @@ var accentTwoColorPicker;
 var accentThreeColorPicker;
 var accentFourColorPicker;
 
+var orientText;
+var orientBool = false;
+
 
 
 //-----------------------------------------------------------
@@ -244,8 +247,15 @@ function windowResized() {
       if(windowWidth > windowHeight){
         desiredWidthRes = displayHeight;
         desiredHeightRes = displayWidth;
+        orientBool = true;
+      }
+      else{
+        orientBool = false;
       }
    } 
+
+   orientText = createElement('h2', orientBool);
+    
 
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
 
