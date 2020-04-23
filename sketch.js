@@ -248,10 +248,9 @@ function windowResized() {
         desiredWidthRes = displayHeight;
         desiredHeightRes = displayWidth;
       }
-      orientBool = "" + windowWidth + " x " + windowHeight;
    } 
 
-   orientText = createElement('h2', orientBool);
+   orientText = createElement('h2', "" + windowWidth + " x " + windowHeight);
     
 
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
