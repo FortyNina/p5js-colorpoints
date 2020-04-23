@@ -45,10 +45,6 @@ var accentTwoColorPicker;
 var accentThreeColorPicker;
 var accentFourColorPicker;
 
-var orientText;
-var orientBool = "";
-
-
 
 //-----------------------------------------------------------
 
@@ -244,14 +240,11 @@ function windowResized() {
       desiredHeightRes = displayHeight;
 
       //Handle case if mobile device is sideways orientation
-      if(windowWidth > windowHeight){
+      if(windowWidth > windowHeight || abs(windowHeight - windowWidth) < 100){
         desiredWidthRes = displayHeight;
         desiredHeightRes = displayWidth;
       }
-   } 
-
-   orientText = createElement('h2', typeof window.orientation);
-    
+   }     
 
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
 
