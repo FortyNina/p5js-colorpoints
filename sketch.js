@@ -241,10 +241,16 @@ function setupResolution(){
    let pixelCount = screenWidth * screenHeight;
    pixelCount = pixelCount / 100000;
    if(pixelCount < 2){
-    dotSize *= .75;
+    dotSize = 1.25;
+    pixScale = 8;
    }
    else if(pixelCount < 5){
-    dotSize *= .85;
+    pixScale = 12;
+    dotSize = 1.5;
+   }
+   else{
+    pixScale = 16;
+    dotSize = 1.75;
    }
 }
 
