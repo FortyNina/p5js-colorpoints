@@ -72,7 +72,11 @@ function setup() {
 
 
   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
-
+  var ismob = isMobileDevice();
+  var title = createElement('h2', ismob);
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('title');
 
 
   //videoFeed.hide();
@@ -310,6 +314,8 @@ function setGUIElements(){
     accentFourColorPicker.parent('palette');
 
 
-
-
 }
+
+function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+};
