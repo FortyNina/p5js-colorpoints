@@ -59,9 +59,14 @@ function setup() {
    if(isMobileDevice()){
       desiredWidthRes = displayWidth;
       desiredHeightRes = displayHeight;
+
+      //Handle case if mobile device is sideways orientation
+      if(windowWidth > windowHeight){
+        desiredWidthRes = displayHeight;
+        desiredHeightRes = displayWidth;
+      }
    } 
-   console.log(desiredHeightRes);
-   console.log(desiredWidthRes);
+
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
 
 
@@ -306,13 +311,4 @@ function setGUIElements(){
 
 function isMobileDevice() {
     return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-
-    var eek = windowWidth > windowHeight;
-     var title = createElement('h2', "Sideways?" + eek);
-    title.style('color','#fff');
-    title.style('opacity', '.8');
-    title.parent('title');
-
-
-
 };
