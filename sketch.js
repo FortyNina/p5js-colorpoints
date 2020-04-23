@@ -232,22 +232,34 @@ function windowResized() {
 
   //NOT WORKING YET
 
-   // screenHeight = windowHeight;
-   // screenWidth = windowWidth;
-   //
-   // screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
-   //
-   //
-   //
-   // pixelDensity(1);
-   // //videoFeed = createCapture(VIDEO);
-   //
-   // resizeCanvas(screenWidth, screenHeight);
-   //  cv.parent('video');
-   //
-   //
-   // videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
-   // videoFeed.hide();
+  //Get proper resolutions based on mobile device and window widths
+   screenHeight = windowHeight;
+   screenWidth = windowWidth;
+
+   if(isMobileDevice()){
+      desiredWidthRes = displayWidth;
+      desiredHeightRes = displayHeight;
+
+      //Handle case if mobile device is sideways orientation
+      if(windowWidth > windowHeight){
+        desiredWidthRes = displayHeight;
+        desiredHeightRes = displayWidth;
+      }
+   } 
+
+   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
+
+
+    //Create and set up Canvas
+    cv = createCanvas(screenWidth, screenHeight);
+    cv.parent('video'); 
+
+
+   //Set up Video feed
+   videoFeed = createCapture(VIDEO);
+   pixelDensity(1);
+   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
+   videoFeed.hide();
 }
 
 function setGUIElements(){
