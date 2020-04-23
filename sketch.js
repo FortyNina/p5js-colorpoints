@@ -54,15 +54,14 @@ function setup() {
 
    screenHeight = windowHeight;
    screenWidth = windowWidth;
-     videoFeed = createCapture(VIDEO);
-     var title = createElement('h2', "Display Dim" + displayWidth + " " + displayHeight);
-    title.style('color','#fff');
-    title.style('opacity', '.8');
-    title.parent('threshold');
+   desiredWidthRes = displayWidth;
+   desiredHeightRes = displayHeight;
 
 
+   videoFeed = createCapture(VIDEO);
+  
    screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
-
+   
 
 
   pixelDensity(1);
@@ -71,11 +70,12 @@ function setup() {
     cv.parent('video');
 
 
+
   videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
 
 
 
-  videoFeed.hide();
+  //videoFeed.hide();
   setGUIElements();
 
 }
@@ -84,7 +84,6 @@ function setup() {
 function draw() {
 
   //movementThreshold = threshSlider.value();
-
 
   var movementThresh = select('#movementThresh').value();
   movementThreshold = map(movementThresh, 0, 100, 1, 10);
@@ -263,6 +262,11 @@ function setGUIElements(){
 
 
     title = createElement('h2', "Invert Points");
+    title.style('color','#fff');
+    title.style('opacity', '.8');
+    title.parent('invertBox');
+
+    title = createElement('h2', "Video feed" +  videoFeed.width + " " + videoFeed.height);
     title.style('color','#fff');
     title.style('opacity', '.8');
     title.parent('invertBox');
