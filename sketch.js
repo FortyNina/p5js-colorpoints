@@ -4,7 +4,7 @@ var lerpPercent = 0; //keep track of lerping
 var colorTravelSpeed = .05; //how quickly the color lerps
 var prevFrame;
 var movementThreshold = 4000;
-var maxDotWidth = 15;
+var maxDotWidth = 13;
 var invert = false;
 var pixScale = 16;
 
@@ -44,35 +44,15 @@ var accentOneColorPicker;
 var accentTwoColorPicker;
 var accentThreeColorPicker;
 var accentFourColorPicker;
-
-
 //-----------------------------------------------------------
 
-
 function setup() {
-
    //Get proper resolutions based on mobile device and window widths
-   screenHeight = windowHeight;
-   screenWidth = windowWidth;
+   setupResolution();
 
-   if(isMobileDevice()){
-      desiredWidthRes = displayWidth;
-      desiredHeightRes = displayHeight - 75;
-
-      //Handle case if mobile device is sideways orientation
-      if(windowWidth > windowHeight){
-        desiredWidthRes = displayHeight - 75;
-        desiredHeightRes = displayWidth;
-      }
-   } 
-
-   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
-
-
-    //Create and set up Canvas
+  //Create and set up Canvas
     cv = createCanvas(screenWidth, screenHeight);
     cv.parent('video'); 
-
 
    //Set up Video feed
    videoFeed = createCapture(VIDEO);
@@ -82,25 +62,23 @@ function setup() {
 
    //Create all GUI elements
    setGUIElements();
-
 }
-
 
 function draw() {
 
+  //Get settings from DOM elements
   var movementThresh = select('#movementThresh').value();
   movementThreshold = map(movementThresh, 0, 100, 1, 10);
 
-
   invert = invertCheckBox.checked();
+
   hexToRGB(accentOneColorPicker.value(), accentColOne);
   hexToRGB(accentTwoColorPicker.value(), accentColTwo);
   hexToRGB(accentThreeColorPicker.value(), accentColThree);
   hexToRGB(accentFourColorPicker.value(), accentColFour);
   hexToRGB(backgroundColorPicker.value(), backCol);
 
-
-  //calculate lerpPercent
+  //calculate lerpPercent (for color gradient shifts)
   lerpPercent += colorTravelSpeed;
   if (lerpPercent > 1) {
     lerpPercent = 0;
@@ -117,16 +95,14 @@ function draw() {
   lerpColors(currentColTwo, 1);
   lerpColors(currentColThree, 2);
   lerpColors(currentColFour, 3);
-
-
   background(backCol);
-  try {
-  videoFeed.loadPixels();
-}
-catch(error) {
-  console.error("Resizing window");
 
-}
+  try {
+    videoFeed.loadPixels();
+  }
+  catch(error) {
+    console.error("Resizing window");
+  }
 
   //Handle coloring pixels
   for (var y = 0; y < videoFeed.height; y++) {
@@ -137,11 +113,10 @@ catch(error) {
       var b = videoFeed.pixels[index + 2];
       var brightMapped = (map(((r + g + b) / 3), 0, 255, 0, pixScale)) + .5;
       var widthBasedOnMovement = 1;
-      //get new width based on pixel comparisons
-      //widthBasedOnMovement = whatever
+
+      //get new width based on pixel comparisons (compares whether the color of the pixel has changed since the last frame)
       if (prevFrame != null) {
         var moveDist = getColDist(r, prevFrame[index + 0], g, prevFrame[index + 1], b, prevFrame[index + 2]);
-
         if (invert) {
           if (moveDist > movementThreshold) {
             widthBasedOnMovement = 0;
@@ -156,7 +131,8 @@ catch(error) {
           }
         }
       }
-      //
+      
+      //Modify the width of the pixel based on brightness
       var widthBrightnessModifier = 1;
       stroke(0, 0, 0, 0);
       if (brightMapped < 1) {
@@ -229,36 +205,47 @@ function RGBToHex(r,g,b){
 
 function windowResized() {
 
-  //NOT WORKING YET
+  setupResolution();
 
-  //Get proper resolutions based on mobile device and window widths
-   screenHeight = windowHeight;
-   screenWidth = windowWidth;
-
-   if(isMobileDevice()){
-      desiredWidthRes = displayWidth;
-      desiredHeightRes = displayHeight - 75;
-
-      //Handle case if mobile device is sideways orientation
-      if(windowWidth > windowHeight || abs(windowHeight - windowWidth) < 100){
-        desiredWidthRes = displayHeight - 75;
-        desiredHeightRes = displayWidth;
-      }
-   }     
-
-   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
-
-
-    //Create and set up Canvas
+  //Create and set up Canvas
     cv = createCanvas(screenWidth, screenHeight);
     cv.parent('video'); 
-
 
    //Set up Video feed
    videoFeed = createCapture(VIDEO);
    pixelDensity(1);
    videoFeed.size(screenWidth / pixScale, screenHeight / pixScale);
    videoFeed.hide();
+}
+
+function setupResolution(){
+
+  //get proper resoltions
+  screenHeight = windowHeight;
+  screenWidth = windowWidth;
+
+   if(isMobileDevice()){
+      desiredWidthRes = displayWidth;
+      desiredHeightRes = displayHeight - 75;
+
+      //Handle case if mobile device is sideways orientation
+      if(windowWidth > windowHeight){
+        desiredWidthRes = displayHeight - 75;
+        desiredHeightRes = displayWidth;
+      }
+   } 
+   screenHeight = (screenWidth * desiredHeightRes) / desiredWidthRes;
+
+   //Handle point sizing
+   //Smaller resolutions = smaller point size
+   let pixelCount = screenWidth * screenHeight;
+   pixelCount = pixelCount / 100000;
+   if(pixelCount < 2){
+    dotSize *= .75;
+   }
+   else if(pixelCount < 5){
+    dotSize *= .85;
+   }
 }
 
 
@@ -274,17 +261,13 @@ function setGUIElements(){
     title.style('opacity', '.8');
     title.parent('threshold');
 
-
     title = createElement('h2', "Invert Points");
     title.style('color','#fff');
     title.style('opacity', '.8');
     title.parent('invertBox');
 
-     
     invertCheckBox = createCheckbox('',false);
     invertCheckBox.parent('invertBox');
-
-
 
     title = createElement('h2', "Palette Select");
     title.style('color','#fff');
@@ -317,8 +300,6 @@ function setGUIElements(){
     accentFourColorPicker.style("width","19.9%");
     accentFourColorPicker.style("height","30px");
     accentFourColorPicker.parent('palette');
-
-
 }
 
 function isMobileDevice() {
